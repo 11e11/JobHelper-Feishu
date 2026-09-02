@@ -1,0 +1,27 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+*.log
+*.tsbuildinfo
+
+# Local/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Personal documents and application materials must never be committed
+*.pdf
+*.doc
+*.docx
+*.rtf
+*简历*
+*resume*
+*Resume*
+
+# Local-only personal profile exports
+*.profile.json
+.env
+.env.*
+!.env.example

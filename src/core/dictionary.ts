@@ -1,0 +1,9 @@
+import type { FillPolicyKind, ProfileKey } from './types';
+
+export const AUTO_KEYS = new Set<ProfileKey>(['name','phone','email','currentCity','school','college','major','education','enrollmentDate','graduationDate','gender','birthDate','politicalStatus','ethnicity','github','homepage','portfolio','jobDirection','source']);
+export const CONFIRM_KEYS = new Set<ProfileKey>(['expectedCity','acceptTransfer','acceptOtherRole','expectedSalary','relativeEmployed','nonCompete']);
+export const TERMS: Record<ProfileKey,string[]> = {
+ name:['姓名','真实姓名','name','full name'], phone:['手机号','手机号码','联系电话','phone','mobile'], email:['邮箱','电子邮箱','email'], currentCity:['所在城市','当前城市','现居地','居住城市'], school:['学校','院校','毕业院校','school','university'], college:['学院','院系','college','faculty'], major:['专业','major'], education:['学历','最高学历','education','degree'], enrollmentDate:['入学时间','入学日期','开始时间'], graduationDate:['毕业时间','毕业日期','预计毕业'], gender:['性别','gender'], birthDate:['出生日期','出生年月','生日','birthday'], politicalStatus:['政治面貌'], ethnicity:['民族'], github:['github'], homepage:['个人主页','homepage','website'], portfolio:['作品集','portfolio'], jobDirection:['求职方向','应聘方向','岗位方向'], source:['信息来源','招聘渠道','获知渠道'], expectedCity:['期望城市','意向城市','工作地点'], acceptTransfer:['接受调剂','服从调剂'], acceptOtherRole:['接受其他岗位','其他职位'], expectedSalary:['期望薪资','薪资要求'], relativeEmployed:['亲属任职','亲属在职'], nonCompete:['竞业协议','竞业限制']
+};
+export const FORBIDDEN_TERMS = ['身份证','证件号码','密码','password','验证码','captcha','银行','银行卡','账户号码','电子签名','诚信声明','文件上传','上传简历','resume upload','submit','提交申请','立即投递'];
+export function policyFor(key?:ProfileKey, text=''):FillPolicyKind { const t=text.toLowerCase(); if (FORBIDDEN_TERMS.some(x=>t.includes(x.toLowerCase()))) return 'forbidden'; if (!key) return 'confirm'; if (AUTO_KEYS.has(key)) return 'auto'; if (CONFIRM_KEYS.has(key)) return 'confirm'; return 'forbidden'; }
