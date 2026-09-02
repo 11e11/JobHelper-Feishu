@@ -1,0 +1,47 @@
+/* ================================================================
+   JobHub — Job Tracker Panel Styles (Neo-Brutalist)
+   ================================================================ */
+
+/* View visibility */
+.jt-view { }
+.jt-view.hidden { display: none; }
+
+/* Low-confidence fields (orange highlight) */
+input.jt-low-confidence,
+.jt-low-confidence {
+  background: var(--yellow) !important;
+  color: var(--black) !important;
+}
+
+/* Form field compact spacing in side panel */
+#panel-job-tracker .field {
+  margin-bottom: 8px;
+}
+
+/* Save actions */
+#panel-job-tracker .btn-primary {
+  background: var(--black);
+  color: var(--white);
+}
+#panel-job-tracker .btn-primary:hover {
+  background: var(--yellow);
+  color: var(--black);
+}
+.jt-review { position:fixed; inset:0; z-index:100; background:rgba(0,0,0,.55); padding:14px; overflow:auto; }
+.jt-review.hidden { display:none; }
+.jt-review-card { background:var(--white); border:3px solid var(--black); box-shadow:6px 6px 0 var(--black); padding:14px; }
+.jt-review-card h2 { margin:0 0 4px; }
+.jt-review-card p { margin:0 0 12px; font-size:12px; }
+.jt-review-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.jt-review-grid .field { margin:0; }
+.jt-review-grid .jt-wide { grid-column:1 / -1; }
+.jt-review-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:12px; }
+.jt-queue-row { display:grid; grid-template-columns:1fr auto auto; gap:5px; align-items:center; margin-top:6px; }
+.jt-queue-row small { overflow-wrap:anywhere; }
+@media (max-width: 520px) {
+  .jt-review { padding:6px; }
+  .jt-review-grid { grid-template-columns:1fr; }
+  .jt-review-grid .jt-wide { grid-column:auto; }
+  .jt-review-actions { flex-direction:column-reverse; }
+  .jt-review-actions .btn { width:100%; }
+}

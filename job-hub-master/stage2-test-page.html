@@ -1,0 +1,9 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>测试工程师｜JobHub 合成招聘</title><meta property="og:site_name" content="JobHub 测试公司"><style>body{font:16px sans-serif;max-width:760px;margin:40px auto}button{padding:10px;margin:8px}#result{padding:16px;border:2px solid}</style></head><body>
+<h1 class="job-title">测试开发工程师</h1>
+<p>岗位编号：TEST-2026-001</p><p>工作地点：厦门</p>
+<section class="job-description">负责浏览器扩展的自动化测试、质量保障与问题定位。要求熟悉 JavaScript 和前端测试工具。</section>
+<form id="application"><label>姓名 <input required></label><label>模拟结果 <select id="outcome"><option value="failure">失败</option><option value="success">成功</option><option value="conflict">冲突</option></select></label><button type="submit" id="submit">提交申请</button></form>
+<div id="result">等待用户操作</div>
+<script>
+application.addEventListener('submit',e=>{e.preventDefault();if(outcome.value==='success'){result.textContent='申请成功，申请编号 TESTAPP2026';application.remove();}else if(outcome.value==='conflict'){result.textContent='申请成功，但提交失败';}else{result.textContent='验证码错误，提交失败';}});
+</script></body></html>

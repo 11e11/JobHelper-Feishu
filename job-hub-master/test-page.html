@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><title>JobHub 阶段一合成验收页</title></head>
+<body><h1>招聘申请合成测试页</h1><form id="application">
+  <label>姓名<input name="candidateName"></label>
+  <label>手机号码<input name="mobile"></label>
+  <label>电子邮箱<input type="email" autocomplete="email"></label>
+  <label>所在城市<input id="controlled" aria-label="所在城市"></label>
+  <label>期望薪资<input name="expectedSalary"></label>
+  <label>紧急联系人姓名<input name="emergencyName"></label>
+  <label>已有姓名<input name="existingName" value="不得覆盖"></label>
+  <label>上传简历<input type="file" name="resume"></label>
+  <label>密码<input type="password"></label>
+  <button type="button">下一步</button><button type="submit">最终提交申请</button>
+</form><output id="events"></output>
+<script>let submitted=0;document.querySelector('form').addEventListener('submit',e=>{e.preventDefault();submitted++;document.body.dataset.submitted=String(submitted)});document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>document.querySelector('#events').textContent+='input:'+el.name+';'));</script>
+</body></html>
