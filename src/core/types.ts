@@ -1,7 +1,10 @@
 export type ProfileKey = 'name'|'phone'|'email'|'currentCity'|'school'|'college'|'major'|'education'|'enrollmentDate'|'graduationDate'|'gender'|'birthDate'|'politicalStatus'|'ethnicity'|'github'|'homepage'|'portfolio'|'jobDirection'|'source'|'expectedCity'|'acceptTransfer'|'acceptOtherRole'|'expectedSalary'|'relativeEmployed'|'nonCompete';
 export type FillPolicyKind = 'auto'|'confirm'|'forbidden';
-export interface Profile { [key: string]: string|boolean|undefined }
-export interface FieldMatch { elementId:string; key?:ProfileKey; label:string; confidence:number; policy:FillPolicyKind; reasons:string[]; kind:string; valuePreview?:string }
+export const EDUCATION_KEYS = ['school','college','major','education','enrollmentDate','graduationDate'] as const;
+export type EducationKey = typeof EDUCATION_KEYS[number];
+export interface EducationEntry { school:string; college:string; major:string; education:string; enrollmentDate:string; graduationDate:string }
+export interface Profile { educations?:EducationEntry[]; [key: string]: string|boolean|EducationEntry[]|undefined }
+export interface FieldMatch { elementId:string; key?:ProfileKey; educationIndex?:number; label:string; confidence:number; policy:FillPolicyKind; reasons:string[]; kind:string; valuePreview?:string }
 export interface SiteMapping { signature:string; key:ProfileKey }
 export interface FillChange { element:HTMLElement; previous:string|boolean; key:ProfileKey }
 export interface SiteAdapter { id:string; matches(url:URL):boolean; enhance(matches:FieldMatch[], root:Document):FieldMatch[] }
