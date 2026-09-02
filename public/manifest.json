@@ -1,1 +1,1 @@
-{"manifest_version":3,"name":"求职表单助手","version":"0.1.0","description":"本地识别并安全填写招聘表单；绝不提交申请。","permissions":["storage","activeTab","scripting"],"action":{"default_popup":"popup.html","default_title":"求职表单助手"},"options_page":"options.html"}
+{"manifest_version":3,"name":"求职表单助手","version":"0.2.0","description":"本地识别并填写招聘表单；绝不提交申请。","permissions":["storage","activeTab","scripting"],"action":{"default_popup":"popup.html","default_title":"求职表单助手"},"options_page":"options.html"}
