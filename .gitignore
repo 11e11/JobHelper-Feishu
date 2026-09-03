@@ -4,6 +4,11 @@ dist/
 coverage/
 *.log
 *.tsbuildinfo
+__pycache__/
+*.py[cod]
+email-sync/*.sqlite3
+email-sync/*.sqlite3-shm
+email-sync/*.sqlite3-wal
 
 # Local/editor files
 .DS_Store
