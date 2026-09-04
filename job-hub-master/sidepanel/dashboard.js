@@ -192,7 +192,7 @@ function computeStatusDist(history) {
 function statusColor(status) {
   if (INTERVIEW_STATUSES.has(status)) return DASHBOARD_COLORS.interview;
   if (status === 'Offer') return DASHBOARD_COLORS.offer;
-  if (status === '已挂' || status === '已拒绝') return DASHBOARD_COLORS.rejected;
+  if (status === '已挂' || status === '简历挂' || status === '已拒绝' || status === '已放弃') return DASHBOARD_COLORS.rejected;
   if (status === '测评' || status === '笔试') return DASHBOARD_COLORS.testing;
   return DASHBOARD_COLORS.applied;
 }

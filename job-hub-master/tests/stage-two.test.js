@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { createApplicationRecord, inferJobDirection, missingReviewFields, normalizeUrl } from '../lib/application-record.js';
 import { GenericResultAdapter } from '../lib/result-detector.js';
 import { toFeishuFields } from '../lib/feishu-api.js';
-import { DEFAULT_FIELD_MAP } from '../lib/constants.js';
+import { CLOSED_STATUSES, DEFAULT_FIELD_MAP } from '../lib/constants.js';
 
 describe('stage-two application records', () => {
   it('creates stable idempotency keys and normalizes tracking URLs', () => {
@@ -16,12 +16,19 @@ describe('stage-two application records', () => {
     expect(inferJobDirection('法务专员')).toBe('');
     expect(missingReviewFields(createApplicationRecord({company:'九牧',jobName:'产品经理'}))).toContain('workLocation');
   });
-  it('serializes only the safe Feishu whitelist and uses a hyperlink object', () => {
-    const record = createApplicationRecord({ company:'九牧', jobName:'产品经理', officialUrl:'https://jobs.test/a' }, 1);
+  it('serializes the optional note and uses a hyperlink object', () => {
+    const record = createApplicationRecord({ company:'九牧', jobName:'产品经理', officialUrl:'https://jobs.test/a', note:'秋招官网投递' }, 1);
     const fields = toFeishuFields({ fieldMap:DEFAULT_FIELD_MAP }, record);
     expect(fields['官网链接']).toEqual({ text:'九牧 · 产品经理', link:'https://jobs.test/a' });
-    expect(fields).not.toHaveProperty('备注');
+    expect(fields['备注']).toBe('秋招官网投递');
     expect(fields).not.toHaveProperty('是否结束');
+  });
+  it('does not send an empty note, so updates preserve an existing Feishu note', () => {
+    const fields = toFeishuFields({ fieldMap:DEFAULT_FIELD_MAP }, createApplicationRecord({company:'九牧',jobName:'产品经理',note:''}, 1));
+    expect(fields).not.toHaveProperty('备注');
+  });
+  it('treats resume rejection as a closed dashboard status', () => {
+    expect(CLOSED_STATUSES.has('简历挂')).toBe(true);
   });
   it('skips optional columns that do not exist in the target table', () => {
     const record = createApplicationRecord({ company:'九牧', jobName:'产品经理', account:'user@example.com' }, 1);

@@ -35,6 +35,9 @@ export async function init(containerEl) {
   fillSelect($('jtrJobDirection'), ['', ...JOB_DIRECTION_OPTIONS]);
   fillSelect($('jtrStage'), STATUS_OPTIONS, '已投递');
   fillSelect($('jtrResult'), RESULT_OPTIONS, '待通知');
+  $('jtrStage')?.addEventListener('change', () => {
+    if ($('jtrStage').value === '简历挂' && $('jtrResult')?.value === '待通知') $('jtrResult').value = '未通过';
+  });
 
   const config = await getConfig();
   if (!isConfigComplete(config)) {
@@ -226,7 +229,7 @@ function renderQueue(queue) {
 function escapeHtml(value) { const div = document.createElement('div'); div.textContent = String(value); return div.innerHTML; }
 
 function showReview(record = {}) {
-  const ids = { company:'Company', jobName:'JobName', jobId:'JobId', jobDirection:'JobDirection', workLocation:'WorkLocation', officialUrl:'OfficialUrl', jd:'Jd', account:'Account', resumeVersion:'ResumeVersion', applicationId:'ApplicationId', stage:'Stage', result:'Result' };
+  const ids = { company:'Company', jobName:'JobName', jobId:'JobId', jobDirection:'JobDirection', workLocation:'WorkLocation', officialUrl:'OfficialUrl', jd:'Jd', account:'Account', resumeVersion:'ResumeVersion', applicationId:'ApplicationId', stage:'Stage', result:'Result', note:'Note' };
   for (const [key, suffix] of Object.entries(ids)) { const el = $('jtr' + suffix); if (el) el.value = record[key] || (key === 'stage' ? '已投递' : key === 'result' ? '待通知' : ''); }
   $('jtrSubmittedAt').value = toLocalInputValue(new Date(record.submittedAt || Date.now()));
   $('jtReview').classList.remove('hidden');
@@ -244,7 +247,7 @@ async function syncReview() {
 }
 
 function collectReviewRecord() {
-  const keys = { company:'Company', jobName:'JobName', jobId:'JobId', jobDirection:'JobDirection', workLocation:'WorkLocation', officialUrl:'OfficialUrl', jd:'Jd', account:'Account', resumeVersion:'ResumeVersion', applicationId:'ApplicationId', stage:'Stage', result:'Result' };
+  const keys = { company:'Company', jobName:'JobName', jobId:'JobId', jobDirection:'JobDirection', workLocation:'WorkLocation', officialUrl:'OfficialUrl', jd:'Jd', account:'Account', resumeVersion:'ResumeVersion', applicationId:'ApplicationId', stage:'Stage', result:'Result', note:'Note' };
   const record = {};
   for (const [key, suffix] of Object.entries(keys)) record[key] = $('jtr' + suffix)?.value.trim() || '';
   record.submittedAt = new Date($('jtrSubmittedAt').value).getTime();
@@ -329,7 +332,7 @@ function collectRecord() {
     url: getVal('Url'), officialUrl: getVal('Url'),
     linkText: pageTitle || [company, position].filter(Boolean).join(' · '),
     status: (() => { const el = document.getElementById('jtStatus'); return el ? el.value : '已投递'; })(),
-    note: getVal('Note'), stage: (() => { const el = document.getElementById('jtStatus'); return el ? el.value : '已投递'; })(), result: '待通知'
+    note: getVal('Note'), stage: (() => { const el = document.getElementById('jtStatus'); return el ? el.value : '已投递'; })(), result: (() => { const el = document.getElementById('jtStatus'); return el?.value === '简历挂' ? '未通过' : '待通知'; })()
   };
 }
 

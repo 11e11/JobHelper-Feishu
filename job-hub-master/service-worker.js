@@ -143,7 +143,7 @@ async function syncApplication(record, forceRecordId = '') {
     if (selected) {
       recordId = await updateRecord(config, selected.record_id, record, { availableFieldNames }); action = 'updated';
     } else { recordId = await createRecord(config, record, { availableFieldNames }); action = 'created'; }
-    await appendHistory(toHistoryItem({ company: record.company, position: record.jobName, url: record.officialUrl, appliedAt: record.submittedAt, status: record.stage }, { syncState: 'synced', recordId, idempotencyKey: record.idempotencyKey }));
+    await appendHistory(toHistoryItem({ company: record.company, position: record.jobName, url: record.officialUrl, appliedAt: record.submittedAt, status: record.stage, note: record.note }, { syncState: 'synced', recordId, idempotencyKey: record.idempotencyKey }));
     await clearPendingContext(); await clearReviewDraft();
     return { ok: true, state: 'synced', action, recordId };
   } catch (error) {
@@ -211,7 +211,7 @@ async function testConnection(rawConfig) {
   for (const key of Object.keys(DEFAULT_FIELD_MAP)) {
     if (!REQUIRED_FIELDS.includes(key) && !byName.has(config.fieldMap[key])) optionalMissing.push(config.fieldMap[key]);
   }
-  const optionRequirements = { jobDirection: ['数据','算法','测试','后端开发','产品','其他','客户端','前端开发'], stage: ['已投递'], result: ['待通知'] };
+  const optionRequirements = { jobDirection: ['数据','算法','测试','后端开发','产品','其他','客户端','前端开发'], stage: ['已投递','简历挂'], result: ['待通知','未通过'] };
   for (const [key, requiredOptions] of Object.entries(optionRequirements)) {
     const field = byName.get(config.fieldMap[key]);
     if (!field || field.type !== 3) continue;

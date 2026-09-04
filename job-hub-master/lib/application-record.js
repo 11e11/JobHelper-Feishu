@@ -42,6 +42,7 @@ export function createApplicationRecord(input = {}, now = Date.now()) {
     jd: String(input.jd || '').trim(), account: String(input.account || '').trim(),
     resumeVersion: String(input.resumeVersion || '').trim(),
     applicationId: String(input.applicationId || '').trim(),
+    note: String(input.note || '').trim(),
     stage: input.stage || '已投递', result: input.result || '待通知',
     submittedAt: Number(input.submittedAt || input.appliedAt || now), updatedAt: now,
     tabId: input.tabId ?? null

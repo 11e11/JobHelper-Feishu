@@ -122,7 +122,7 @@ export const DEFAULT_FIELD_MAP = {
   jobId: '岗位编号', jobDirection: '岗位方向', workLocation: '工作地点',
   officialUrl: '官网链接', jd: 'JD', stage: '当前阶段', result: '当前结果',
   submittedAt: '投递时间', account: '投递账号', applicationId: '申请编号',
-  resumeVersion: '简历版本', updatedAt: '最后更新时间'
+  resumeVersion: '简历版本', note: '备注', updatedAt: '最后更新时间'
 };
 
 // 沿用 JobHub 原始必填语义：六个默认列中备注可选，其余五列阻断同步。
@@ -131,12 +131,12 @@ export const EXPECTED_FIELD_TYPES = {
   idempotencyKey: 1, company: 1, jobName: 1, jobId: 1,
   jobDirection: 3, workLocation: 1, officialUrl: 15, jd: 1,
   stage: 3, result: 3, submittedAt: 5, account: 1, applicationId: 1,
-  resumeVersion: 1, updatedAt: 5
+  resumeVersion: 1, note: 1, updatedAt: 5
 };
 
 export const WRITABLE_RECORD_KEYS = Object.freeze(Object.keys(DEFAULT_FIELD_MAP));
 export const JOB_DIRECTION_OPTIONS = ['数据','算法','测试','后端开发','产品','其他','客户端','前端开发'];
-export const STAGE_OPTIONS = ['已拒绝','Offer','HR面','笔试','准备投递','待评估','等待结果','已放弃','二面','已投递','一面','三面','测评'];
+export const STAGE_OPTIONS = ['已拒绝','简历挂','Offer','HR面','笔试','准备投递','待评估','等待结果','已放弃','二面','已投递','一面','三面','测评'];
 export const RESULT_OPTIONS = ['已完成','已放弃','待参加','未开始','待通知','未通过','已取消','已通过'];
 
 export const FIELD_TYPE_NAMES = {
@@ -165,4 +165,4 @@ export const DASHBOARD_COLORS = {
 
 // ---------- 面试相关状态 ----------
 export const INTERVIEW_STATUSES = new Set(['一面', '二面', '三面', 'HR面']);
-export const CLOSED_STATUSES = new Set(['已挂', '已拒绝', 'Offer']);
+export const CLOSED_STATUSES = new Set(['已挂', '简历挂', '已拒绝', '已放弃', 'Offer']);
